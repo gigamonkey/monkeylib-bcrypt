@@ -1,5 +1,12 @@
 -*- mode: markup; -*-
 
+This code is based on the code from this blog posting:
+
+  http://www.letsyouandhimfight.com/2010/07/14/cl-bcrypt-a-first-attempt/
+
+I packaged it up with an .asd file, frobbed the API, and added some
+comments.
+
 * Installing
 
 Since this code is just a thin wrapper around a C bcrypt library
