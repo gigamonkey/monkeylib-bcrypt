@@ -1,4 +1,4 @@
-# This code is licensed under the "X11 license". 
+;; This code is licensed under the "X11 license". 
 
 (defpackage :cl-bcrypt
   (:export :encode :check)
