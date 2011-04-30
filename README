@@ -1,0 +1,23 @@
+-*- mode: markup; -*-
+
+* Installing
+
+Since this code is just a thin wrapper around a C bcrypt library
+you'll need one of those installed on your system. (Note that the
+bcrypt package available on Ubuntu and Debian does not provide this
+library—it is a file encryption program that uses the Blowfish
+algorithm.) The easiest solution is probably to get the Openwall
+bcrypt from http://www.openwall.com/crypt/.
+
+ - Extract it in a directory of your choice, and run make.
+
+ - Now create a shared library:
+
+      gcc -shared -W1,-soname,libbcrypt.so.1 -o libbcrypt.so.1.0.4 crypt_blowfish.o x86.o
+
+   (of course, replace 1 and 1.0.4 with the correct version numbers).
+
+Place the resulting libbcrypt.so.1.0.4 somewhere where Lisp can find
+it. (~/lib will work or the cffi:*foreign-library-directories*
+variable may be useful here.)
+
