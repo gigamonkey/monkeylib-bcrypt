@@ -1,4 +1,4 @@
-;; This code is licensed under the "X11 license". 
+;; This code is licensed under the "X11 license". Copyright 2010 by Jon Rosebaugh.
 
 (defpackage :cl-bcrypt
   (:export :encode :check)
