@@ -7,5 +7,9 @@
 
 (defpackage :bcrypt
   (:use :common-lisp :cffi)
-  (:export :encode :check))
+  (:export :hash 
+           :password=
+           :cost
+           :version
+           *random-bytes-function*))
 
