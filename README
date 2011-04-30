@@ -14,17 +14,14 @@ you'll need one of those installed on your system. (Note that the
 bcrypt package available on Ubuntu and Debian does not provide this
 library—it is a file encryption program that uses the Blowfish
 algorithm.) The easiest solution is probably to get the Openwall
-bcrypt from http://www.openwall.com/crypt/.
+bcrypt from http://www.openwall.com/crypt/. I’ve also put a version on
+Github at:
 
- - Extract it in a directory of your choice, and run make.
+   https://github.com/gigamonkey/openwall-bcrypt
 
- - Now create a shared library:
-
-      gcc -shared -W1,-soname,libbcrypt.so.1 -o libbcrypt.so.1.0.4 crypt_blowfish.o x86.o
-
-   (of course, replace 1 and 1.0.4 with the correct version numbers).
-
-Place the resulting libbcrypt.so.1.0.4 somewhere where Lisp can find
-it. (~/lib will work or the cffi:*foreign-library-directories*
-variable may be useful here.)
+to which I’ve added a ‘library’ target to the makefile to build the
+shared library. If you grab my version you can cd into the directory
+and ‘make library’. Then place the resulting libbcrypt.so.1.0.4
+somewhere where Lisp can find it. (~/lib will work or the
+cffi:*foreign-library-directories* variable may be useful here.)
 
