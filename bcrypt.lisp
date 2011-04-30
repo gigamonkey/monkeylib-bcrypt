@@ -1,8 +1,9 @@
-(defpackage :cl-bcrypt
-  (:export :encode :check)
-  (:use :common-lisp :cffi))
+;;;
+;;; Copyright (c) 2010, Jon Rosebaugh All rights reserved.
+;;; Copyright (c) 2011, Peter Seibel All rights reserved.
+;;;
 
-(in-package :cl-bcrypt)
+(in-package :bcrypt)
 
 (define-foreign-library libbcrypt
   (:unix (:or "libbcrypt.so.1.0.4" "libbcrypt.so.1" "libbcrypt.so"))
@@ -41,8 +42,7 @@
       (with-foreign-pointer-as-string ((data data-size) 61 :encoding :ascii)
 	(zero-memory data data-size)
 	(with-foreign-string (password-cstring password)
-	  (crypt-rn password-cstring settings data data-size))
-	))))
+	  (crypt-rn password-cstring settings data data-size))))))
 
 (defun check (encoded password)
   (equal encoded (with-foreign-pointer-as-string ((data data-size) 61 :encoding :ascii)
