@@ -90,7 +90,7 @@ parameter and salt from HASH."
 bytes obtained via GET-RANDOM-BYTES."
   (loop for byte across (get-random-bytes n)
      for p = mem-pointer then (inc-pointer p 1)
-     do (setf (mem-ref p :int) byte))))
+     do (setf (mem-ref p :int) byte)))
 
 (defun get-random-bytes (n)
   "Get a vector of N random bytes using *RANDOM-BYTES-FUNCTION* if it
