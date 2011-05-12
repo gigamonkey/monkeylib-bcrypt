@@ -11,5 +11,6 @@
            :password=
            :cost
            :version
+           *default-cost*
            *random-bytes-function*))
 

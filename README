@@ -22,6 +22,6 @@ Github at:
 to which I’ve added a ‘library’ target to the makefile to build the
 shared library. If you grab my version you can cd into the directory
 and ‘make library’. Then place the resulting libbcrypt.so.1.0.4
-somewhere where Lisp can find it. (~/lib will work or the
+somewhere where Lisp can find it. (On OS X ~/lib will work or the
 cffi:*foreign-library-directories* variable may be useful here.)
 

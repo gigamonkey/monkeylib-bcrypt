@@ -33,7 +33,10 @@
   /dev/urandom and if that doesn't work, using the Lisp's built in
   random number generator.")
 
-(defun hash (password &optional (cost 10))
+(defparameter *default-cost* 10
+  "The default value for the COST parameter to HASH.") 
+
+(defun hash (password &optional cost)
   "Encode the given plaintext PASSWORD with the given COST (defaults
 to 10). Increasing cost by one approximately doubles the amount of
 work required to encode the password (and thus to check it.)"
@@ -41,7 +44,7 @@ work required to encode the password (and thus to check it.)"
     (fill-with-random-bytes salt salt-size)
     (with-foreign-pointer (settings 30 settings-size)
       (zero-memory settings settings-size)
-      (crypt-gensalt-rn cost salt salt-size settings settings-size)
+      (crypt-gensalt-rn (or cost *default-cost*) salt salt-size settings settings-size)
       (with-foreign-pointer-as-string ((data data-size) 61 :encoding :ascii)
 	(zero-memory data data-size)
 	(with-foreign-string (password-cstring password)
