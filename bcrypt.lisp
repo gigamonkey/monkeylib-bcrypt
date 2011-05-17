@@ -54,9 +54,6 @@ work required to encode the password (and thus to check it.)"
   "Return true if the given plaintext PASSWORD hashes to HASH, a hash
 returned by BCRYPT:HASH. The check extracts the appropriate cost
 parameter and salt from HASH."
-  (when (and (string= password "$2a$" :end1 4) (string/= hash "$2a$" :end1 4))
-    (warn "Password and hash to password= arguments appear to be swapped.")) 
-  
   (let ((rehash
          (with-foreign-pointer-as-string ((data data-size) 61 :encoding :ascii)
            (zero-memory data data-size)
