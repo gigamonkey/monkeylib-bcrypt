@@ -3,6 +3,7 @@
 ;;
 
 (defsystem monkeylib-bcrypt
+  :description "Wrapper around bcrypt C library for hashing passwords."
   :components
   ((:file "packages")
    (:file "bcrypt" :depends-on ("packages")))
