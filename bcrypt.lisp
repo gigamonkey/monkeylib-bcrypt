@@ -6,6 +6,7 @@
 (in-package :bcrypt)
 
 (define-foreign-library libbcrypt
+  (:darwin "libbcrypt.dylib")
   (:unix (:or "libbcrypt.so.1.0.4" "libbcrypt.so.1" "libbcrypt.so"))
   (t (:default "libbcrypt")))
 
