@@ -17,11 +17,11 @@ algorithm.) The easiest solution is probably to get the Openwall
 bcrypt from http://www.openwall.com/crypt/. I’ve also put a version on
 Github at:
 
-   https://github.com/gigamonkey/openwall-bcrypt
+   https://github.com/mohe2015/crypt_blowfish
 
-to which I’ve added a ‘library’ target to the makefile to build the
+to which I’ve added a library target to the makefile to build the
 shared library. If you grab my version you can cd into the directory
-and ‘make library’. Then place the resulting libbcrypt.so.1.0.4
+and ‘make libbcrypt.so’. Then place the resulting libbcrypt.so
 somewhere where Lisp can find it. (On OS X ~/lib will work or the
 cffi:*foreign-library-directories* variable may be useful here.)
 
