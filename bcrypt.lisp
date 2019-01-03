@@ -12,6 +12,7 @@
 (use-foreign-library libbcrypt)
 
 (defcfun ("_crypt_gensalt_blowfish_rn" crypt-gensalt-rn) :pointer
+  (prefix :pointer)
   (count :ulong)
   (input :pointer)
   (input-size :int)
@@ -40,15 +41,25 @@
   "Encode the given plaintext PASSWORD with the given COST (defaults
 to 10). Increasing cost by one approximately doubles the amount of
 work required to encode the password (and thus to check it.)"
-  (with-foreign-pointer (salt 16 salt-size)
-    (fill-with-random-bytes salt salt-size)
-    (with-foreign-pointer (settings 30 settings-size)
-      (zero-memory settings settings-size)
-      (crypt-gensalt-rn (or cost *default-cost*) salt salt-size settings settings-size)
-      (with-foreign-pointer-as-string ((data data-size) 61 :encoding :ascii)
-	(zero-memory data data-size)
-	(with-foreign-string (password-cstring password)
-	  (crypt-rn password-cstring settings data data-size))))))
+  (with-foreign-string (prefix-cstring "$2b")
+    (with-foreign-pointer (salt 16 salt-size)
+      (fill-with-random-bytes salt salt-size)
+      (with-foreign-pointer (settings 30 settings-size)
+	(zero-memory settings settings-size)
+	(crypt-gensalt-rn prefix-cstring (or cost *default-cost*) salt salt-size settings settings-size)
+	(with-foreign-pointer-as-string ((data data-size) 61 :encoding :ascii)
+	  (zero-memory data data-size)
+	  (with-foreign-string (password-cstring password)
+	    (crypt-rn password-cstring settings data data-size)))))))
+
+(defun secure-string= (a b)
+  (if (= (length a) (length b))
+      (let ((res 0))
+	(loop for ac across a
+	      for bc across b do
+	     (setf res (logior res (logxor (char-code ac) (char-code bc)))))
+	(= res 0))
+      nil))
 
 (defun password= (password hash)
   "Return true if the given plaintext PASSWORD hashes to HASH, a hash
@@ -60,7 +71,7 @@ parameter and salt from HASH."
            (with-foreign-strings ((password-cstring password) (encoded-cstring hash))
              (crypt-rn password-cstring encoded-cstring data data-size)))))
 
-    (string= hash rehash)))
+    (secure-string= hash rehash))) ;; TODO timing attack safe comparison
 
 (defun cost (hash)
   "Extract the cost parameter used to produce HASH."
