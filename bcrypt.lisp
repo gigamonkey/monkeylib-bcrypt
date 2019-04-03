@@ -71,7 +71,7 @@ parameter and salt from HASH."
            (with-foreign-strings ((password-cstring password) (encoded-cstring hash))
              (crypt-rn password-cstring encoded-cstring data data-size)))))
 
-    (secure-string= hash rehash))) ;; TODO timing attack safe comparison
+    (secure-string= hash rehash)))
 
 (defun cost (hash)
   "Extract the cost parameter used to produce HASH."
